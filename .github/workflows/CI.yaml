@@ -33,6 +33,7 @@ jobs:
           image-reference: "localbuild/jelastic-cli:latest"
           dockerfile-path: "Dockerfile"
           fail-build: true
+          debug: true
           acs-report-enable: true
       - name: anchore inline scan JSON results
         run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
