@@ -21,10 +21,23 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  test:
+    name: Testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Anchore scan
+        uses: anchore/scan-action@master
+        with:
+          image-reference: "localbuild/jelastic-cli:latest"
+          dockerfile-path: "Dockerfile"
+          fail-build: true
+
   docker:
     name: Build and Public Docker image
     runs-on: ubuntu-latest
-    needs: lint
+    needs: [lint, test]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
