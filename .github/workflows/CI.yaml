@@ -33,6 +33,15 @@ jobs:
           image-reference: "localbuild/jelastic-cli:latest"
           dockerfile-path: "Dockerfile"
           fail-build: true
+          acs-report-enable: true
+      - name: anchore inline scan JSON results
+        run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+      - name: anchore action SARIF report
+        run: cat results.sarif
+      - name: upload Anchore scan SARIF report
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: results.sarif
 
   docker:
     name: Build and Public Docker image
