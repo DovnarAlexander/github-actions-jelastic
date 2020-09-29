@@ -27,10 +27,24 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+      - name: Build and Push to GitHub registry Commit tag
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: docker.pkg.github.com/${{ github.repository }}/jelastic-cli
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.G_TOKEN }}
+          registry: docker.pkg.github.com
+          tags: "${{ github.sha }}"
+      - name: Login to GitHub Packages Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.G_TOKEN }}
       - name: Anchore scan
         uses: anchore/scan-action@master
         with:
-          image-reference: "localbuild/jelastic-cli:latest"
+          image-reference: "docker.pkg.github.com/${{ github.repository }}/jelastic-cli:${{ github.sha }}"
           dockerfile-path: "Dockerfile"
           fail-build: true
           debug: true
@@ -65,7 +79,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.G_TOKEN }}
           registry: docker.pkg.github.com
-          tags: "${{ github.sha }},${{ steps.create_tag.outputs.new_tag }},latest"
+          tags: "${{ steps.create_tag.outputs.new_tag }},latest"
       - name: Build and Push to DockerHub
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
