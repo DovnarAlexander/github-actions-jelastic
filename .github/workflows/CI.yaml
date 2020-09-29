@@ -37,7 +37,7 @@ jobs:
       - name: Build and Push to GitHub registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: docker.pkg.github.com/${{ github.repository }}/service
+          name: docker.pkg.github.com/${{ github.repository }}/jelastic-cli
           username: ${{ github.repository_owner }}
           password: ${{ secrets.G_TOKEN }}
           registry: docker.pkg.github.com

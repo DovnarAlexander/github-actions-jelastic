@@ -2,6 +2,9 @@
 Includes Jelastic CLI installed in the Docker
 ## Usage
 ```bash
-export JELASTIC_USERNAME=
-docker run --rm -e "JELASTIC_USERNAME=$JELASTIC_USERNAME" -e "JELASTIC_PASSWORD=$JELASTIC_PASSWORD" -e "JELASTIC_URL=$JELASTIC_URL" jelastic:latest environment/control/getenvs
+export JELASTIC_URL=<jelastic_api_fqnd>
+export JELASTIC_USERNAME=<your_username>
+export JELASTIC_PASSWORD=<your_password>
+
+docker run --rm --env JELASTIC_URL --env JELASTIC_USERNAME --env JELASTIC_PASSWORD jelastic:latest environment/control/getenvs
 ```
