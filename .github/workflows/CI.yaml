@@ -46,7 +46,7 @@ jobs:
           lower=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
           echo "::set-output name=lower::$lower"
       - name: Anchore scan
-        uses: anchore/scan-action@master
+        uses: anchore/scan-action@v2
         with:
           image-reference: "docker.pkg.github.com/${{ steps.repo.outputs.lower }}/jelastic-cli:${{ github.sha }}"
           dockerfile-path: "Dockerfile"
