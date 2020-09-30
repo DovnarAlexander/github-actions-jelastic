@@ -65,7 +65,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
       - name: Dry-run tag generation
-        id: create_tag
+        id: create_tag_test
         uses: anothrNick/github-tag-action@1.17.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -78,14 +78,14 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.G_TOKEN }}
           registry: docker.pkg.github.com
-          tags: "${{ steps.create_tag.outputs.new_tag }},latest"
+          tags: "${{ steps.create_tag_test.outputs.new_tag }},latest"
       - name: Build and Push to DockerHub
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: aliaksandrdounar/jelastic-cli
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          tags: "${{ github.sha }},${{ steps.create_tag.outputs.new_tag }},latest"
+          tags: "${{ github.sha }},${{ steps.create_tag_test.outputs.new_tag }},latest"
 
   release:
     name: Create Release
