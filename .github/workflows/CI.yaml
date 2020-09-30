@@ -49,13 +49,9 @@ jobs:
         uses: anchore/scan-action@v2
         with:
           image: "docker.pkg.github.com/${{ steps.repo.outputs.lower }}/jelastic-cli:${{ github.sha }}"
-          path: "Dockerfile"
           fail-build: true
           acs-report-enable: true
-      - name: anchore inline scan JSON results
-        run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
-      - name: anchore action SARIF report
-        run: cat results.sarif
+          severity-cutoff: high
       - name: upload Anchore scan SARIF report
         uses: github/codeql-action/upload-sarif@v1
         with:
