@@ -1,0 +1,4 @@
+# Ignore local shell scripts
+*.sh
+# Except entrypoint
+!entrypoint.sh
