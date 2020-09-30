@@ -48,10 +48,9 @@ jobs:
       - name: Anchore scan
         uses: anchore/scan-action@v2
         with:
-          image-reference: "docker.pkg.github.com/${{ steps.repo.outputs.lower }}/jelastic-cli:${{ github.sha }}"
-          dockerfile-path: "Dockerfile"
+          image: "docker.pkg.github.com/${{ steps.repo.outputs.lower }}/jelastic-cli:${{ github.sha }}"
+          path: "Dockerfile"
           fail-build: true
-          debug: true
           acs-report-enable: true
       - name: anchore inline scan JSON results
         run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
