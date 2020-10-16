@@ -1,6 +1,25 @@
-# jelastic-docker-image
-Includes Jelastic CLI installed in the Docker
-## GitHub actions TBA
+# GitHub action for Jelastic CLI
+Performs some actions via Jelastic CLI via API
+## GitHub actions
+### Inputs
+#### `jelastic_url`
+**Required**Jelastic API URL
+#### `jelastic_username`
+**Required**Jelastic Username
+#### `jelastic_password`
+**Required**Jelastic Password or API Token
+#### `task`
+**Required**Task to execute. More info [here](https://docs.jelastic.com/cli/).
+### Example usage
+```yaml
+  - name: Run GetEnv command
+    uses: DovnarAlexander/github-action-jelastic@master
+    with:
+      jelastic_url: app.mycloud.by
+      jelastic_username: ${{ secrets.JELASTIC_USERNAME }}
+      jelastic_password: ${{ secrets.JELASTIC_TOKEN }}
+      task: environment/control/getenvs
+```
 ## Local usage
 ### Preparation
 ```bash

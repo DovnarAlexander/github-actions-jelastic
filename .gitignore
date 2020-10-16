@@ -2,3 +2,5 @@
 *.sh
 # Except entrypoint
 !entrypoint.sh
+# Idea
+.idea

@@ -1,0 +1,30 @@
+---
+
+name: 'Jelastic CLI'
+author: 'DovnarAlexander'
+branding:
+  icon: file-plus
+  color: red
+description: 'Executes commands via Jelastic CLI.'
+inputs:
+  jelastic_url:
+    description: 'Jelastic API URL.'
+    required: true
+  jelastic_username:
+    description: 'Jelastic Username.'
+    required: true
+  jelastic_password:
+    description: 'Jelastic Password or API Token.'
+    required: true
+  task:
+    description: 'Task to execute.'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    JELASTIC_URL: ${{ inputs.jelastic_url }}
+    JELASTIC_USERNAME: ${{ inputs.jelastic_username }}
+    JELASTIC_PASSWORD: ${{ inputs.jelastic_password }}
+  args:
+    - ${{ inputs.task }}
