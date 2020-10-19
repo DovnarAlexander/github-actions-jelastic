@@ -22,6 +22,7 @@ inputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  entrypoint: '/cli/entrypoint-github.sh'
   env:
     JELASTIC_URL: ${{ inputs.jelastic_url }}
     JELASTIC_USERNAME: ${{ inputs.jelastic_username }}

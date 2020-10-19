@@ -1,6 +1,6 @@
 # Ignore local shell scripts
 *.sh
 # Except entrypoint
-!entrypoint.sh
+!entrypoint*.sh
 # Idea
 .idea

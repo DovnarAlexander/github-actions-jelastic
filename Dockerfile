@@ -23,4 +23,5 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN curl -s ftp://ftp.jelastic.com/pub/cli/jelastic-cli-installer.sh | bash
 # Copy entrypoint
 COPY entrypoint.sh /cli/entrypoint.sh
+COPY entrypoint-github.sh /cli/entrypoint-github.sh
 ENTRYPOINT ["/cli/entrypoint.sh"]
