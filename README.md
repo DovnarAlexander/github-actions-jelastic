@@ -10,6 +10,9 @@ Performs some actions via Jelastic CLI via API
 **Required**Jelastic Password or API Token
 #### `task`
 **Required**Task to execute. More info [here](https://docs.jelastic.com/cli/).
+### Outputs
+#### `output`
+Result JSON document returned from Jelastic.
 ### Example usage
 ```yaml
   - name: Run GetEnv command

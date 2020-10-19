@@ -19,6 +19,9 @@ inputs:
   task:
     description: 'Task to execute.'
     required: true
+outputs:
+  output:
+    description: 'Result JSON document returned from Jelastic'
 runs:
   using: 'docker'
   image: 'Dockerfile'
