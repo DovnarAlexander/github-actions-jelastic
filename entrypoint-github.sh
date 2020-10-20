@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
-# To overwrite GitHub run command
-export HOME=/cli
+
+export HOME=/cli  # To overwrite GitHub run command
 
 cd $HOME
-response=$(/cli/entrypoint.sh "$*")
+response=$(/cli/entrypoint.sh "$*" | jq --compact-output)
 echo "::set-output name=output::$response"
