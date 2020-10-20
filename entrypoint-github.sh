@@ -5,5 +5,5 @@ set -e
 export HOME=/cli
 
 cd $HOME
-response=$(/cli/entrypoint.sh "$*")
+response=$(/cli/entrypoint.sh "$*" | jq --compact-output)
 echo "::set-output name=output::$response"
