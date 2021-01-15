@@ -24,9 +24,26 @@ jobs:
   test:
     name: Testing
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.info.outputs.tag }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+      - id: info
+        run: |
+          repo=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
+          if [ -n $GITHUB_SHA ]
+          then
+            tag=$GITHUB_SHA
+          elif [ -n $GITHUB_HEAD_REF ]
+          then
+            tag=$(echo $GITHUB_HEAD_REF | cut -f 3- -d "/")
+          else
+            tag=schedule
+          fi
+          tag=$tag
+          echo "::set-output name=repo::$repo"
+          echo "::set-output name=tag::$tag"
       - name: Build and Push to GitHub registry Commit tag
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
@@ -34,21 +51,17 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.G_TOKEN }}
           registry: docker.pkg.github.com
-          tags: "${{ github.sha }}"
+          tags: "${{ steps.info.outputs.tag }}"
       - name: Login to GitHub Packages Docker Registry
         uses: docker/login-action@v1
         with:
           registry: docker.pkg.github.com
           username: ${{ github.repository_owner }}
           password: ${{ secrets.G_TOKEN }}
-      - id: repo
-        run: |
-          lower=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
-          echo "::set-output name=lower::$lower"
       - name: Anchore scan
         uses: anchore/scan-action@v2
         with:
-          image: "docker.pkg.github.com/${{ steps.repo.outputs.lower }}/jelastic-cli:${{ github.sha }}"
+          image: "docker.pkg.github.com/${{ steps.info.outputs.repo }}/jelastic-cli:${{ steps.info.outputs.tag }}"
           fail-build: true
           acs-report-enable: true
           severity-cutoff: high
@@ -78,14 +91,14 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.G_TOKEN }}
           registry: docker.pkg.github.com
-          tags: "${{ steps.create_tag_test.outputs.new_tag }},latest"
+          tags: "${{ needs.test.outputs.tag }},${{ steps.create_tag_test.outputs.new_tag }},latest"
       - name: Build and Push to DockerHub
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: aliaksandrdounar/jelastic-cli
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          tags: "${{ github.sha }},${{ steps.create_tag_test.outputs.new_tag }},latest"
+          tags: "${{ needs.test.outputs.tag }},${{ steps.create_tag_test.outputs.new_tag }},latest"
 
   release:
     name: Create Release
