@@ -16,6 +16,14 @@ inputs:
   jelastic_password:
     description: 'Jelastic Password or API Token.'
     required: true
+  login:
+    description: 'Do you want to login first'
+    required: false
+    default: "true"
+  json:
+    description: 'Do you want to print jsoned output instead of raw.'
+    required: false
+    default: "true"
   task:
     description: 'Task to execute.'
     required: true
@@ -31,4 +39,6 @@ runs:
     JELASTIC_USERNAME: ${{ inputs.jelastic_username }}
     JELASTIC_PASSWORD: ${{ inputs.jelastic_password }}
   args:
+    - ${{ inputs.login }}
+    - ${{ inputs.json }}
     - ${{ inputs.task }}
