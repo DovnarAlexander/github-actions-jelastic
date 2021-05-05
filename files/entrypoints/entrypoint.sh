@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC2086
 
 set -e
 
@@ -7,7 +8,7 @@ echo n | "$HOME"/jelastic/users/authentication/signin --login "$JELASTIC_USERNAM
 
 echo "Command execution..."
 env
-bash "$HOME"/jelastic/"$*" | tee "$OUTPUT"
+bash $HOME/jelastic/$* | tee "$OUTPUT"
 echo $?
 exit_code="$?"
 errors_found=$(grep -c "Error" "$OUTPUT" || echo 0)
