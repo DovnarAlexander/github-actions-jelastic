@@ -6,7 +6,7 @@ ENV JQ_OUTPUT="true"
 ENV HOME=/cli
 ENV OUTPUT=$HOME/output.log
 # Install Bash, cURL and clean up APK
-RUN apk add --no-cache curl=~7.76 bash=~5.1 jq=~1.6 openjdk11~11.0 && \
+RUN apk add --no-cache curl=~7.76 bash=~5.1 jq=~1.6 openjdk11=~11.0 && \
     rm -vrf /var/cache/apk/*
 # Create User and Group
 ENV USER=docker
@@ -26,5 +26,5 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Install Jelastic CLI
 RUN curl -s ftp://ftp.jelastic.com/pub/cli/jelastic-cli-installer.sh | bash
 # Copy entrypoint
-ADD --chown=$USER:$USER files/entrypoints/* $HOME/
+COPY --chown=$USER:$USER files/entrypoints/* $HOME/
 ENTRYPOINT ["/cli/entrypoint.sh"]

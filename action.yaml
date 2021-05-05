@@ -30,4 +30,5 @@ runs:
     JELASTIC_URL: ${{ inputs.jelastic_url }}
     JELASTIC_USERNAME: ${{ inputs.jelastic_username }}
     JELASTIC_PASSWORD: ${{ inputs.jelastic_password }}
-  args: [${{ inputs.task }}]
+  args:
+    - ${{ inputs.task }}
