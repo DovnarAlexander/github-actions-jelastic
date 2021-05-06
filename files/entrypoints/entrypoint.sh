@@ -11,7 +11,7 @@ env
 bash $HOME/jelastic/$* | tee "$OUTPUT"
 echo $?
 exit_code="$?"
-errors_found=$(grep -c "Error" "$OUTPUT" || echo 0)
+errors_found=$(grep -iFc "error" "$OUTPUT" || echo 0)
 if [[ "$exit_code" -gt 0 ]] && [[ "$errors_found" -gt 0 ]]
 then
   echo "Exception:"

@@ -69,7 +69,7 @@ jobs:
           tags: aliaksandrdounar/jelastic-cli:latest
 
   build:
-    name: Build and Public Docker image
+    name: Build and Publish Docker images
     runs-on: ubuntu-latest
     needs: [lint, test]
     steps:
