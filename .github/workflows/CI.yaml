@@ -81,7 +81,7 @@ jobs:
       - name: Login to docker.pkg.github.com (Build)
         uses: docker/login-action@v1
         with:
-          registry: docker.pkg.github.com
+          registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.G_TOKEN }}
       - name: Login to DockerHub
@@ -93,7 +93,7 @@ jobs:
         id: create_tag_test
         uses: anothrNick/github-tag-action@1.30.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
           WITH_V: true
           DRY_RUN: true
       # Build and push
@@ -120,12 +120,12 @@ jobs:
         uses: heinrichreimer/github-changelog-generator-action@v2.1.1
         id: changelog
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.G_TOKEN }}
       - name: Bump version and push tag
         id: create_tag
         uses: anothrNick/github-tag-action@1.17.2
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
           WITH_V: true
       - name: Create Release
         uses: actions/create-release@latest
