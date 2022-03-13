@@ -1,6 +1,6 @@
 ---
 
-name: 'jelastic-cli'
+name: 'av-jelastic-cli'
 author: 'Abhisek Lamsal'
 branding:
   icon: file-plus
