@@ -1,6 +1,6 @@
 ---
 
-name: 'av-jelastic-cli'
+name: 'Jelastic Github Actions'
 author: 'Abhisek Lamsal'
 branding:
   icon: file-plus
